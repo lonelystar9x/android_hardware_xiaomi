@@ -78,19 +78,19 @@ fun ModernEqualizerScreen(
                 },
                 actions = {
                     IconButton(onClick = { showSaveDialog = true }) {
-                        Icon(Icons.Default.Save, contentDescription = "Save")
+                        Icon(Icons.Default.Save, contentDescription = stringResource(R.string.action_save))
                     }
                     IconButton(onClick = { showResetDialog = true }) {
-                        Icon(Icons.Default.RestartAlt, contentDescription = "Reset")
+                        Icon(Icons.Default.RestartAlt, contentDescription = stringResource(R.string.reset))
                     }
                     IconButton(onClick = { navController.navigate("import_export") }) {
-                        Icon(Icons.Default.ImportExport, contentDescription = "Import/Export")
+                        Icon(Icons.Default.ImportExport, contentDescription = stringResource(R.string.action_import_export))
                     }
                     if (uiState is EqualizerUiState.Success) {
                         val state = uiState as EqualizerUiState.Success
                         if (state.currentPreset.isUserDefined) {
                             IconButton(onClick = { showDeleteDialog = true }) {
-                                Icon(Icons.Default.Delete, contentDescription = "Delete")
+                                Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.action_delete))
                             }
                         }
                     }
@@ -273,15 +273,18 @@ private fun ModernEqualizerContent(
                     )
                     Column {
                         Text(
-                            text = "Band Mode Mismatch",
+                            text = stringResource(R.string.band_mode_mismatch_title),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onErrorContainer
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "This ${state.currentPreset.bandMode.displayName} preset cannot be edited in ${state.bandMode.displayName} mode. " +
-                                  "Switch to ${state.currentPreset.bandMode.displayName} or select a compatible preset.",
+                            text = stringResource(
+                                R.string.band_mode_mismatch_desc,
+                                state.currentPreset.bandMode.displayName,
+                                state.bandMode.displayName
+                            ),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onErrorContainer
                         )
@@ -310,7 +313,7 @@ private fun ModernEqualizerContent(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Equalizer View",
+                        text = stringResource(R.string.equalizer_view_title),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -321,7 +324,7 @@ private fun ModernEqualizerContent(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     ViewModeTile(
-                        title = "Curve",
+                        title = stringResource(R.string.equalizer_view_curve),
                         icon = Icons.Default.ShowChart,
                         isSelected = viewMode == EqualizerViewMode.CURVE,
                         onClick = { onViewModeChange(EqualizerViewMode.CURVE) },
@@ -329,7 +332,7 @@ private fun ModernEqualizerContent(
                     )
                     
                     ViewModeTile(
-                        title = "Sliders",
+                        title = stringResource(R.string.equalizer_view_sliders),
                         icon = Icons.Default.Tune,
                         isSelected = viewMode == EqualizerViewMode.SLIDERS,
                         onClick = { onViewModeChange(EqualizerViewMode.SLIDERS) },
@@ -369,8 +372,8 @@ private fun ModernEqualizerContent(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = if (canEdit) "Interactive Frequency Response" 
-                                          else "Frequency Response (Read-only)",
+                                    text = if (canEdit) stringResource(R.string.freq_response_interactive)
+                                          else stringResource(R.string.freq_response_readonly),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.SemiBold,
                                     color = if (canEdit) MaterialTheme.colorScheme.onSurface
@@ -382,7 +385,7 @@ private fun ModernEqualizerContent(
                                           else MaterialTheme.colorScheme.errorContainer
                                 ) {
                                     Text(
-                                        text = "${state.bandMode.bandCount} bands",
+                                        text = stringResource(R.string.bands_count, state.bandMode.bandCount),
                                         style = MaterialTheme.typography.labelMedium,
                                         fontWeight = FontWeight.Bold,
                                         color = if (canEdit) MaterialTheme.colorScheme.onSecondaryContainer
@@ -393,9 +396,9 @@ private fun ModernEqualizerContent(
                             }
                             Text(
                                 text = if (canEdit) 
-                                    "Drag the control points to adjust gain (±15 dB) • ${getFrequencyRange(state.bandMode)}"
+                                    stringResource(R.string.freq_response_desc, getFrequencyRange(state.bandMode))
                                 else
-                                    "Read-only view • Band mode mismatch",
+                                    stringResource(R.string.freq_response_readonly_desc),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = if (canEdit) MaterialTheme.colorScheme.onSurfaceVariant
                                       else MaterialTheme.colorScheme.error,
@@ -436,7 +439,7 @@ private fun ModernEqualizerContent(
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = "Frequency Response",
+                                        text = stringResource(R.string.freq_response_interactive),
                                         style = MaterialTheme.typography.titleMedium,
                                         fontWeight = FontWeight.SemiBold,
                                     )
@@ -479,7 +482,7 @@ private fun ModernEqualizerContent(
                             ) {
                                 Text(
                                     text = if (canEdit) stringResource(R.string.dolby_geq_slider_label_gain)
-                                          else "${stringResource(R.string.dolby_geq_slider_label_gain)} (Read-only)",
+                                          else stringResource(R.string.dolby_geq_slider_label_gain_readonly),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.SemiBold,
                                     color = if (canEdit) MaterialTheme.colorScheme.onSurface
@@ -632,14 +635,14 @@ private fun BandModeSelector(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Band Configuration",
+                    text = stringResource(R.string.band_config_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
             }
             
             Text(
-                text = "Choose equalizer precision: more bands = finer control",
+                text = stringResource(R.string.band_config_desc),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(bottom = 12.dp)

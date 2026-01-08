@@ -19,8 +19,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import org.lunaris.dolby.R
 import org.lunaris.dolby.service.AppProfileMonitorService
 
 @Composable
@@ -68,14 +70,14 @@ fun AppProfileSettingsCard(
                 Spacer(modifier = Modifier.width(12.dp))
                 
                 Text(
-                    text = "Per-App Audio Profiles",
+                    text = stringResource(R.string.app_profiles_title),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
             }
             
             Text(
-                text = "Automatically switch audio profiles based on the active app for optimized sound.",
+                text = stringResource(R.string.app_profiles_summary),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -87,7 +89,7 @@ fun AppProfileSettingsCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Auto-switch profiles",
+                    text = stringResource(R.string.app_profiles_auto_switch),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium
                 )
@@ -145,7 +147,7 @@ fun AppProfileSettingsCard(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Show toasts",
+                            text = stringResource(R.string.app_profiles_show_toasts),
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Medium
                         )
@@ -199,7 +201,7 @@ fun AppProfileSettingsCard(
                     modifier = Modifier.size(20.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Manage App Profiles")
+                Text(stringResource(R.string.app_profiles_manage))
             }
         }
     }
@@ -217,14 +219,14 @@ fun AppProfileSettingsCard(
             },
             title = { 
                 Text(
-                    "Permission Required",
+                    text = stringResource(R.string.permission_required_title),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 ) 
             },
             text = {
                 Text(
-                    "To automatically switch profiles based on the active app, please grant Usage Access permission in the next screen.",
+                    text = stringResource(R.string.usage_access_permission_summary),
                     style = MaterialTheme.typography.bodyMedium
                 )
             },
@@ -237,7 +239,7 @@ fun AppProfileSettingsCard(
                     },
                     shape = RoundedCornerShape(12.dp)
                 ) {
-                    Text("Grant Permission")
+                    Text(stringResource(R.string.grant_permission))
                 }
             },
             dismissButton = {
@@ -245,7 +247,7 @@ fun AppProfileSettingsCard(
                     onClick = { showPermissionDialog = false },
                     shape = RoundedCornerShape(12.dp)
                 ) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             },
             shape = RoundedCornerShape(28.dp)

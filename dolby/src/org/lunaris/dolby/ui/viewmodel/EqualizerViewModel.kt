@@ -63,7 +63,7 @@ class EqualizerViewModel(application: Application) : AndroidViewModel(applicatio
                     bandMode = currentBandMode
                 )
             } catch (e: Exception) {
-                _uiState.value = EqualizerUiState.Error(e.message ?: "Unknown error")
+                _uiState.value = EqualizerUiState.Error(e.message ?: context.getString(R.string.error_unknown))
             }
         }
     }
@@ -204,8 +204,11 @@ class EqualizerViewModel(application: Application) : AndroidViewModel(applicatio
                 if (!isFlatPreset && state.currentPreset.bandMode != currentBandMode) {
                     ToastHelper.showToast(
                         context,
-                        "Cannot edit ${state.currentPreset.bandMode.displayName} preset in ${currentBandMode.displayName} mode. " +
-                        "Switch to ${state.currentPreset.bandMode.displayName} or select a different preset."
+                        context.getString(
+                            R.string.error_band_mode_mismatch_toast,
+                            state.currentPreset.bandMode.displayName,
+                            currentBandMode.displayName
+                        }
                     )
                     return@launch
                 }
@@ -219,7 +222,7 @@ class EqualizerViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun savePreset(name: String): String? {
         val state = _uiState.value
-        if (state !is EqualizerUiState.Success) return "Invalid state"
+        if (state !is EqualizerUiState.Success) return context.getString(R.string.error_invalid_state)
         
         if (state.presets.any { it.name.equals(name.trim(), ignoreCase = true) }) {
             return context.getString(R.string.dolby_geq_preset_name_exists)

@@ -14,6 +14,7 @@ import org.json.JSONObject
 import org.lunaris.dolby.domain.models.BandGain
 import org.lunaris.dolby.domain.models.BandMode
 import org.lunaris.dolby.domain.models.EqualizerPreset
+import org.lunaris.dolby.R
 import java.io.*
 
 class PresetExportManager(private val context: Context) {
@@ -49,7 +50,7 @@ class PresetExportManager(private val context: Context) {
         
         val version = json.optInt("version", 1)
         if (version > PRESET_FILE_VERSION) {
-            throw IllegalArgumentException("Preset version not supported")
+            throw IllegalArgumentException(context.getString(R.string.error_invalid_version))
         }
         val name = json.getString("name")
         val bandMode = if (json.has("bandMode")) {
@@ -71,7 +72,7 @@ class PresetExportManager(private val context: Context) {
         val expectedCount = bandMode.bandCount
         if (bandGains.size != expectedCount) {
             throw IllegalArgumentException(
-                "Band count mismatch: expected $expectedCount, got ${bandGains.size}"
+                context.getString(R.string.error_band_mismatch, expectedCount, bandGains.size)
             )
         }
 
@@ -105,7 +106,7 @@ class PresetExportManager(private val context: Context) {
                     BufferedReader(InputStreamReader(inputStream, Charsets.UTF_8)).use { reader ->
                         reader.readText()
                     }
-                } ?: throw IOException("Cannot open file")
+                } ?: throw IOException(context.getString(R.string.error_open_file))
                 val preset = importPresetFromJson(json)
                 Result.success(preset)
             } catch (e: Exception) {
@@ -185,12 +186,12 @@ class PresetExportManager(private val context: Context) {
                     type = MIME_TYPE
                     putExtra(android.content.Intent.EXTRA_STREAM, uri)
                     putExtra(android.content.Intent.EXTRA_SUBJECT, 
-                        "Dolby Preset: ${preset.name} (${preset.bandMode.displayName})")
+                        context.getString(R.string.preset_share_subject, preset.name, preset.bandMode.displayName))
                     putExtra(android.content.Intent.EXTRA_TEXT, 
-                        "Check out this custom Dolby ${preset.bandMode.displayName} audio preset!")
+                        context.getString(R.string.preset_share_text, preset.bandMode.displayName))
                     addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
-                Result.success(android.content.Intent.createChooser(intent, "Share Preset"))
+                Result.success(android.content.Intent.createChooser(intent, context.getString(R.string.preset_share)))
             } catch (e: Exception) {
                 Result.failure(e)
             }
@@ -203,7 +204,7 @@ class PresetExportManager(private val context: Context) {
                 val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) 
                     as android.content.ClipboardManager
                 val clip = android.content.ClipData.newPlainText(
-                    "Dolby Preset: ${preset.name} (${preset.bandMode.displayName})",
+                    context.getString(R.string.preset_clipboard_label, preset.name, preset.bandMode.displayName),
                     json
                 )
                 clipboard.setPrimaryClip(clip)
@@ -225,7 +226,7 @@ class PresetExportManager(private val context: Context) {
                     val preset = importPresetFromJson(text)
                     Result.success(preset)
                 } else {
-                    Result.failure(IllegalStateException("No data in clipboard"))
+                    Result.failure(IllegalStateException(context.getString(R.string.error_empty_clipboard)))
                 }
             } catch (e: Exception) {
                 Result.failure(e)

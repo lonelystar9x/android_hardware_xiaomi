@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -53,7 +54,7 @@ fun AppProfileScreen(
             TopAppBar(
                 title = { 
                     Text(
-                        "Per-App Audio Profiles",
+                        stringResource(R.string.app_profiles_title),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold
                     ) 
@@ -62,7 +63,7 @@ fun AppProfileScreen(
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.back)
                         )
                     }
                 },
@@ -71,12 +72,12 @@ fun AppProfileScreen(
                         val state = uiState as AppProfileUiState.Success
                         if (state.appsWithProfiles.isNotEmpty()) {
                             IconButton(onClick = { showClearAllDialog = true }) {
-                                Icon(Icons.Default.ClearAll, contentDescription = "Clear All")
+                                Icon(Icons.Default.ClearAll, contentDescription = stringResource(R.string.clear_all))
                             }
                         }
                     }
                     IconButton(onClick = { viewModel.loadApps() }) {
-                        Icon(Icons.Default.Refresh, contentDescription = "Refresh")
+                        Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh))
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -101,7 +102,7 @@ fun AppProfileScreen(
                     ) {
                         CircularProgressIndicator()
                         Text(
-                            text = "Loading apps...",
+                            text = stringResource(R.string.app_profiles_loading),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -137,7 +138,7 @@ fun AppProfileScreen(
                             TextField(
                                 value = searchQuery,
                                 onValueChange = { searchQuery = it },
-                                placeholder = { Text("Search apps...") },
+                                placeholder = { Text(stringResource(R.string.app_profiles_search_hint)) },
                                 modifier = Modifier.weight(1f),
                                 colors = TextFieldDefaults.colors(
                                     focusedContainerColor = androidx.compose.ui.graphics.Color.Transparent,
@@ -151,7 +152,7 @@ fun AppProfileScreen(
                                 IconButton(onClick = { searchQuery = "" }) {
                                     Icon(
                                         Icons.Default.Clear,
-                                        contentDescription = "Clear search"
+                                        contentDescription = stringResource(R.string.clear_search)
                                     )
                                 }
                             }
@@ -180,7 +181,7 @@ fun AppProfileScreen(
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 Text(
-                                    text = "No apps found",
+                                    text = stringResource(R.string.app_profiles_no_apps),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -231,7 +232,7 @@ fun AppProfileScreen(
                             color = MaterialTheme.colorScheme.error
                         )
                         Button(onClick = { viewModel.loadApps() }) {
-                            Text("Retry")
+                            Text(stringResource(R.string.retry))
                         }
                     }
                 }
@@ -241,8 +242,8 @@ fun AppProfileScreen(
 
     if (showClearAllDialog) {
         ModernConfirmDialog(
-            title = "Clear All App Profiles",
-            message = "This will remove all per-app profile assignments. Apps will use the default profile.",
+            title = stringResource(R.string.app_profiles_clear_all),
+            message = stringResource(R.string.app_profiles_clear_all_message),
             icon = Icons.Default.ClearAll,
             onConfirm = {
                 viewModel.clearAllAppProfiles()
@@ -301,9 +302,9 @@ private fun AppProfileItem(
                 
                 val currentProfileName = if (app.assignedProfile >= 0) {
                     val index = profileValues.indexOfFirst { it.toInt() == app.assignedProfile }
-                    if (index >= 0) profiles[index] else "Default"
+                    if (index >= 0) profiles[index] else stringResource(R.string.app_profiles_default)
                 } else {
-                    "Default"
+                    stringResource(R.string.app_profiles_default)
                 }
                 
                 Text(
@@ -327,7 +328,7 @@ private fun AppProfileItem(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Change",
+                            text = stringResource(R.string.app_profiles_change),
                             style = MaterialTheme.typography.labelLarge
                         )
                         Spacer(modifier = Modifier.width(4.dp))
@@ -350,7 +351,7 @@ private fun AppProfileItem(
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text("Default")
+                                Text(stringResource(R.string.app_profiles_default))
                                 if (app.assignedProfile == -1) {
                                     Icon(
                                         Icons.Default.Check,

@@ -22,9 +22,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import org.lunaris.dolby.R
 import org.lunaris.dolby.utils.*
 
 @Composable
@@ -49,7 +51,7 @@ fun EnhancedBottomNavigationBar(
         ) {
             EnhancedNavItem(
                 icon = Icons.Default.Home,
-                label = "Home",
+                label = stringResource(R.string.nav_home),
                 selected = currentRoute == "settings",
                 onClick = { onNavigate("settings") },
                 modifier = Modifier.weight(1f)
@@ -57,7 +59,7 @@ fun EnhancedBottomNavigationBar(
             
             EnhancedNavItem(
                 icon = Icons.Default.GraphicEq,
-                label = "Equalizer",
+                label = stringResource(R.string.nav_equalizer),
                 selected = currentRoute == "equalizer",
                 onClick = { onNavigate("equalizer") },
                 isEqualizer = true,
@@ -66,7 +68,7 @@ fun EnhancedBottomNavigationBar(
             
             EnhancedNavItem(
                 icon = Icons.Default.Settings,
-                label = "Advanced",
+                label = stringResource(R.string.nav_advanced),
                 selected = currentRoute == "advanced",
                 onClick = { onNavigate("advanced") },
                 modifier = Modifier.weight(1f)

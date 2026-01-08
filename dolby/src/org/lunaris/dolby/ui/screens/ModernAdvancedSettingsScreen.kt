@@ -225,7 +225,7 @@ private fun ModernAdvancedSettingsContent(
             if (state.settings.currentProfile != 0) {
                 item {
                     ModernSettingsCard(
-                        title = "Surround Virtualizer",
+                        title = stringResource(R.string.dolby_category_virtualizer),
                         icon = Icons.Default.Headphones
                     ) {
                         if (state.isOnSpeaker) {
@@ -263,7 +263,7 @@ private fun ModernAdvancedSettingsContent(
                 
                 item {
                     ModernSettingsCard(
-                        title = "Dialogue Enhancement",
+                        title = stringResource(R.string.dolby_category_dialogue),
                         icon = Icons.Default.RecordVoiceOver
                     ) {
                         ModernSettingSwitch(
@@ -334,7 +334,7 @@ private fun ModernAdvancedSettingsContent(
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text = "Enable Dolby Atmos to access advanced settings",
+                            text = stringResource(R.string.dolby_adv_settings_disabled_hint),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSecondaryContainer
                         )

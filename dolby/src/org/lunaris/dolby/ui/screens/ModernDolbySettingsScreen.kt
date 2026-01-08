@@ -52,7 +52,7 @@ fun ModernDolbySettingsScreen(
                     IconButton(onClick = { showResetDialog = true }) {
                         Icon(
                             Icons.Default.RestartAlt, 
-                            contentDescription = "Reset",
+                            contentDescription = stringResource(R.string.reset),
                             tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
@@ -95,7 +95,7 @@ fun ModernDolbySettingsScreen(
                     ) {
                         CircularProgressIndicator()
                         Text(
-                            text = "Loading...",
+                            text = stringResource(R.string.loading),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -194,7 +194,7 @@ private fun ModernDolbySettingsContent(
                 exit = fadeOut() + shrinkVertically()
             ) {
                 ModernSettingsCard(
-                    title = "Intelligent Equalizer",
+                    title = stringResource(R.string.dolby_ieq),
                     icon = Icons.Default.GraphicEq
                 ) {
                     ModernIeqSelector(
