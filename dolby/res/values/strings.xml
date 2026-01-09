@@ -139,6 +139,8 @@
     <string name="app_profiles_default">Default</string>
     <string name="app_profiles_change">Change</string>
     <string name="app_profiles_assigned">Assigned: %1$s</string>
+    <string name="app_profiles_headphone_only">Headphone/BT only mode</string>
+    <string name="app_profiles_headphone_only_description">Only switch profiles when earphones or Bluetooth audio devices are connected</string>
 
     <string name="app_profiles_summary">Automatically switch audio profiles based on the active app for optimized sound.</string>
     <string name="app_profiles_auto_switch">Auto-switch profiles</string>
