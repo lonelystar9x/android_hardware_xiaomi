@@ -62,6 +62,11 @@
     <string name="action_delete">Delete</string>
     <string name="action_import_export">Import/Export</string>
 
+    <string name="error_invalid_bass_level">Invalid bass level: %1$s</string>
+    <string name="error_invalid_treble_level">Invalid treble level: %1$s</string>
+    <string name="error_set_bass_failed">Failed to set bass level</string>
+    <string name="error_set_treble_failed">Failed to set treble level</string>
+
     <string name="error_unknown">Unknown error</string>
     <string name="error_invalid_state">Invalid state</string>
     <string name="error_band_mode_mismatch_toast">Cannot edit %1$s preset in %2$s mode. Switch to %1$s or select a different preset.</string>

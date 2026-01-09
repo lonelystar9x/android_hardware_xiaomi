@@ -9,9 +9,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import org.lunaris.dolby.DolbyConstants
-import org.lunaris.dolby.R
 import org.lunaris.dolby.data.DolbyRepository
 import org.lunaris.dolby.domain.models.*
+import org.lunaris.dolby.R
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -24,29 +24,40 @@ class DolbyViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _uiState = MutableStateFlow<DolbyUiState>(DolbyUiState.Loading)
     val uiState: StateFlow<DolbyUiState> = _uiState.asStateFlow()
+    val currentProfile: StateFlow<Int> = repository.currentProfile
     
-    val profileChanged: StateFlow<Int> = repository.profileChanged
-
     private var speakerStateJob: Job? = null
+    private var profileChangeJob: Job? = null
     private var isCleared = false
 
     init {
         DolbyConstants.dlog(TAG, "ViewModel initialized")
         loadSettings()
         observeSpeakerState()
+        observeProfileChanges()
     }
     
     private fun observeSpeakerState() {
         speakerStateJob?.cancel()
         speakerStateJob = viewModelScope.launch {
-            repository.isOnSpeaker
-                .distinctUntilChanged()
-                .collect { 
-                    if (!isCleared) {
-                        DolbyConstants.dlog(TAG, "Speaker state changed: $it")
-                        loadSettings()
-                    }
+            repository.isOnSpeaker.collect { 
+                if (!isCleared) {
+                    DolbyConstants.dlog(TAG, "Speaker state changed: $it")
+                    loadSettings()
                 }
+            }
+        }
+    }
+    
+    private fun observeProfileChanges() {
+        profileChangeJob?.cancel()
+        profileChangeJob = viewModelScope.launch {
+            repository.currentProfile.collect {
+                if (!isCleared) {
+                    DolbyConstants.dlog(TAG, "Profile changed to: $it")
+                    loadSettings()
+                }
+            }
         }
     }
 
@@ -115,7 +126,6 @@ class DolbyViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 repository.setCurrentProfile(profile)
-                loadSettings()
             } catch (e: Exception) {
                 DolbyConstants.dlog(TAG, "Error setting profile: ${e.message}")
             }
@@ -140,8 +150,12 @@ class DolbyViewModel(application: Application) : AndroidViewModel(application) {
                 val profile = repository.getCurrentProfile()
                 repository.setBassLevel(profile, level)
                 loadSettings()
+            } catch (e: IllegalArgumentException) {
+                DolbyConstants.dlog(TAG, "Invalid bass level: ${e.message}")
+                _uiState.value = DolbyUiState.Error(context.getString(R.string.error_invalid_bass_level, e.message))
             } catch (e: Exception) {
                 DolbyConstants.dlog(TAG, "Error setting bass level: ${e.message}")
+                _uiState.value = DolbyUiState.Error(context.getString(R.string.error_set_bass_failed))
             }
         }
     }
@@ -164,8 +178,12 @@ class DolbyViewModel(application: Application) : AndroidViewModel(application) {
                 val profile = repository.getCurrentProfile()
                 repository.setTrebleLevel(profile, level)
                 loadSettings()
+            } catch (e: IllegalArgumentException) {
+                DolbyConstants.dlog(TAG, "Invalid treble level: ${e.message}")
+                _uiState.value = DolbyUiState.Error(context.getString(R.string.error_invalid_treble_level, e.message))
             } catch (e: Exception) {
                 DolbyConstants.dlog(TAG, "Error setting treble level: ${e.message}")
+                _uiState.value = DolbyUiState.Error(context.getString(R.string.error_set_treble_failed))
             }
         }
     }
@@ -251,6 +269,7 @@ class DolbyViewModel(application: Application) : AndroidViewModel(application) {
             } catch (e: Exception) {
                 DolbyConstants.dlog(TAG, "Error setting dialogue enhancer amount: ${e.message}")
             }
+        }
     }
 
     fun resetAllProfiles() {
@@ -276,7 +295,9 @@ class DolbyViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.coroutineContext.cancelChildren()
         speakerStateJob?.cancel()
         speakerStateJob = null
-        
+        profileChangeJob?.cancel()
+        profileChangeJob = null
+        repository.close()
         super.onCleared()
     }
     

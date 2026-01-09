@@ -40,14 +40,12 @@ class EqualizerViewModel(application: Application) : AndroidViewModel(applicatio
     private fun observeProfileChanges() {
         profileChangeJob?.cancel()
         profileChangeJob = viewModelScope.launch {
-            repository.profileChanged
-                .distinctUntilChanged()
-                .collect {
-                    if (!isCleared) {
-                        DolbyConstants.dlog(TAG, "Profile changed, reloading equalizer")
-                        loadEqualizer()
-                    }
+            repository.currentProfile.collect {
+                if (!isCleared) {
+                    DolbyConstants.dlog(TAG, "Profile changed, reloading equalizer")
+                    loadEqualizer()
                 }
+            }
         }
     }
 
@@ -312,6 +310,7 @@ class EqualizerViewModel(application: Application) : AndroidViewModel(applicatio
         viewModelScope.coroutineContext.cancelChildren()
         profileChangeJob?.cancel()
         profileChangeJob = null
+        repository.close()
         super.onCleared()
     }
     
