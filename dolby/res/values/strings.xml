@@ -50,6 +50,7 @@
     <string name="dolby_reset_all_toast">Succesfully reset all profiles</string>
     <string name="dolby_hp_virtualizer_dolby_strength">Surround virtualizer Strength</string>
     <string name="dolby_dialogue_enhancer_dolby_strength">Dialogue enhancer Strength</string>
+    <string name="dolby_notification_listener_label">Dolby Atmos Service</string>
 
     <string name="dolby_category_virtualizer">Surround Virtualizer</string>
     <string name="dolby_category_dialogue">Dialogue Enhancement</string>
@@ -142,6 +143,12 @@
     <string name="usage_access_permission_summary">To automatically switch profiles based on the active app, please grant Usage Access permission in the next screen.</string>
     <string name="grant_permission">Grant Permission</string>
     <string name="cancel">Cancel</string>
+
+    <string name="notification_permission_title">Notification Access Required</string>
+    <string name="notification_permission_summary">Enable notification access to keep Dolby Atmos running in the background and allow automatic profile switching.</string>
+    <string name="notification_dialog_title">Enable Notification Access</string>
+    <string name="notification_dialog_msg">This permission allows Dolby Atmos to:\n\n• Automatically switch audio profiles\n• Monitor foreground apps\n\nYour notifications will not be read or modified.</string>
+    <string name="open_settings">Open Settings</string>
 
     <string name="back">Back</string>
     <string name="clear_all">Clear All</string>
