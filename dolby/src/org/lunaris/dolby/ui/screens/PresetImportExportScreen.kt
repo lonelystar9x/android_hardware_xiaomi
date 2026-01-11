@@ -88,11 +88,14 @@ fun PresetImportExportScreen(
                 isLoading = true
                 exportManager.importPresetFromFile(uri).fold(
                     onSuccess = { preset ->
-                        val error = viewModel.savePreset(preset.name)
+                        val error = viewModel.saveImportedPreset(preset)
                         if (error != null) {
                             ToastHelper.showToast(context, error)
                         } else {
-                            ToastHelper.showToast(context, context.getString(R.string.preset_imported_name, preset.name))
+                            ToastHelper.showToast(
+                                context, 
+                                "Preset '${preset.name}' imported! (${preset.bandMode.displayName})"
+                            )
                             viewModel.loadEqualizer()
                         }
                     },
@@ -138,7 +141,7 @@ fun PresetImportExportScreen(
                     onSuccess = { presets ->
                         var successCount = 0
                         presets.forEach { preset ->
-                            if (viewModel.savePreset(preset.name) == null) {
+                            if (viewModel.saveImportedPreset(preset) == null) {
                                 successCount++
                             }
                         }
@@ -263,11 +266,14 @@ fun PresetImportExportScreen(
                                                 isLoading = true
                                                 exportManager.importPresetFromClipboard().fold(
                                                     onSuccess = { preset ->
-                                                        val error = viewModel.savePreset(preset.name)
+                                                        val error = viewModel.saveImportedPreset(preset)
                                                         if (error != null) {
                                                             ToastHelper.showToast(context, error)
                                                         } else {
-                                                            ToastHelper.showToast(context, importSuccessMsg)
+                                                            ToastHelper.showToast(
+                                                                context,
+                                                                "Preset imported from clipboard! (${preset.bandMode.displayName})"
+                                                            )
                                                             viewModel.loadEqualizer()
                                                         }
                                                     },
@@ -304,7 +310,7 @@ fun PresetImportExportScreen(
                                 preset = preset,
                                 onExportFile = {
                                     selectedPreset = preset
-                                    exportLauncher.launch("${preset.name.replace(" ", "_")}.ldp")
+                                    exportLauncher.launch("${preset.name.replace(" ", "_")}_${preset.bandMode.value}band.ldp")
                                 },
                                 onCopyClipboard = {
                                     scope.launch {
@@ -450,7 +456,7 @@ private fun PresetExportCard(
                         fontWeight = FontWeight.SemiBold
                     )
                     Text(
-                        stringResource(R.string.bands_count, preset.bandGains.size),
+                        "${preset.bandMode.displayName} • ${preset.bandGains.size} bands",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
