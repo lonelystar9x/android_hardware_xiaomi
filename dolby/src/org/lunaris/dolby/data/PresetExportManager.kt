@@ -149,7 +149,7 @@ class PresetExportManager(private val context: Context) {
                     BufferedReader(InputStreamReader(inputStream, Charsets.UTF_8)).use { reader ->
                         reader.readText()
                     }
-                } ?: throw IOException("Cannot open file")
+                } ?: throw IOException(context.getString(R.string.error_open_file))
                 val jsonObject = JSONObject(json)
                 val presetsArray = jsonObject.getJSONArray("presets")
                 val presets = mutableListOf<EqualizerPreset>()
@@ -182,13 +182,14 @@ class PresetExportManager(private val context: Context) {
                     "${context.packageName}.fileprovider",
                     file
                 )
+                val bandModeName = context.getString(preset.bandMode.displayNameRes)
                 val intent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
                     type = MIME_TYPE
                     putExtra(android.content.Intent.EXTRA_STREAM, uri)
                     putExtra(android.content.Intent.EXTRA_SUBJECT, 
-                        context.getString(R.string.preset_share_subject, preset.name, preset.bandMode.displayName))
+                        context.getString(R.string.preset_share_subject, preset.name, bandModeName))
                     putExtra(android.content.Intent.EXTRA_TEXT, 
-                        context.getString(R.string.preset_share_text, preset.bandMode.displayName))
+                        context.getString(R.string.preset_share_text, bandModeName))
                     addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
                 Result.success(android.content.Intent.createChooser(intent, context.getString(R.string.preset_share)))
@@ -203,8 +204,11 @@ class PresetExportManager(private val context: Context) {
                 val json = exportPresetToJson(preset)
                 val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) 
                     as android.content.ClipboardManager
+
+                val bandModeName = context.getString(preset.bandMode.displayNameRes)
+
                 val clip = android.content.ClipData.newPlainText(
-                    context.getString(R.string.preset_clipboard_label, preset.name, preset.bandMode.displayName),
+                    context.getString(R.string.preset_clipboard_label, preset.name, bandModeName),
                     json
                 )
                 clipboard.setPrimaryClip(clip)

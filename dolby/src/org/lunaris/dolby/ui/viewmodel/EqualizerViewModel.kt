@@ -234,12 +234,16 @@ class EqualizerViewModel(application: Application) : AndroidViewModel(applicatio
                 if (state is EqualizerUiState.Success) {
                     val isFlatPreset = state.currentPreset.name == context.getString(R.string.dolby_preset_default)
                     if (!isFlatPreset && state.currentPreset.bandMode != currentBandMode) {
+
+                        val currentModeName = context.getString(state.currentPreset.bandMode.displayNameRes)
+                        val targetModeName = context.getString(currentBandMode.displayNameRes)
+
                         ToastHelper.showToast(
                             context,
                             context.getString(
                                 R.string.error_band_mode_mismatch_toast,
-                                state.currentPreset.bandMode.displayName,
-                                currentBandMode.displayName
+                                currentModeName,
+                                targetModeName
                             )
                         )
                         return@launch
@@ -294,7 +298,7 @@ class EqualizerViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun saveImportedPreset(preset: EqualizerPreset): String? {
         val state = _uiState.value
-        if (state !is EqualizerUiState.Success) return "Invalid state"
+        if (state !is EqualizerUiState.Success) return context.getString(R.string.error_invalid_state)
         
         if (state.presets.any { it.name.equals(preset.name.trim(), ignoreCase = true) }) {
             return context.getString(R.string.dolby_geq_preset_name_exists)

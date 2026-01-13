@@ -56,7 +56,6 @@ fun PresetImportExportScreen(
 
     val exportSuccessMsg = stringResource(R.string.preset_export_success)
     val exportFailedMsg = stringResource(R.string.preset_export_failed)
-    val importSuccessMsg = stringResource(R.string.preset_import_success)
     val importFailedMsg = stringResource(R.string.preset_import_failed)
     val copySuccessMsg = stringResource(R.string.copy_success)
     val shareFailedMsg = stringResource(R.string.share_failed)
@@ -95,9 +94,10 @@ fun PresetImportExportScreen(
                         if (error != null) {
                             ToastHelper.showToast(context, error)
                         } else {
+                            val modeName = context.getString(preset.bandMode.displayNameRes)
                             ToastHelper.showToast(
                                 context, 
-                                "Preset '${preset.name}' imported! (${preset.bandMode.displayName})"
+                                context.getString(R.string.preset_import_success_msg, preset.name, modeName)
                             )
                             viewModel.loadEqualizer()
                         }
@@ -273,9 +273,10 @@ fun PresetImportExportScreen(
                                                         if (error != null) {
                                                             ToastHelper.showToast(context, error)
                                                         } else {
+                                                            val modeName = context.getString(preset.bandMode.displayNameRes)
                                                             ToastHelper.showToast(
                                                                 context,
-                                                                "Preset imported from clipboard! (${preset.bandMode.displayName})"
+                                                                context.getString(R.string.preset_import_clipboard_success, modeName)
                                                             )
                                                             viewModel.loadEqualizer()
                                                         }
@@ -437,13 +438,14 @@ fun PresetImportExportScreen(
 
     if (showDeleteDialog && presetToDelete != null) {
         ModernConfirmDialog(
-            title = "Delete Preset",
-            message = "Are you sure you want to delete '${presetToDelete!!.name}'? This will remove it from your preset list and cannot be undone.",
+            title = stringResource(R.string.dolby_geq_delete_preset),
+            message = stringResource(R.string.delete_preset_confirm, presetToDelete?.name ?: ""),
             icon = Icons.Default.Delete,
             onConfirm = {
                 scope.launch {
+                    val name = presetToDelete?.name ?: ""
                     viewModel.deletePreset(presetToDelete!!)
-                    ToastHelper.showToast(context, "Preset '${presetToDelete!!.name}' deleted")
+                    ToastHelper.showToast(context, context.getString(R.string.delete_preset_success, name))
                     viewModel.loadEqualizer()
                     showDeleteDialog = false
                     presetToDelete = null
@@ -485,7 +487,11 @@ private fun PresetExportCard(
                         fontWeight = FontWeight.SemiBold
                     )
                     Text(
-                        "${preset.bandMode.displayName} • ${preset.bandGains.size} bands",
+                        text = stringResource(
+                        R.string.preset_bands_info, 
+                        stringResource(preset.bandMode.displayNameRes),
+                        preset.bandGains.size
+                        ),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -515,7 +521,7 @@ private fun PresetExportCard(
                     IconButton(onClick = onDelete) {
                         Icon(
                             Icons.Default.Delete, 
-                            contentDescription = "Delete",
+                            contentDescription = stringResource(R.string.action_delete),
                             tint = MaterialTheme.colorScheme.error
                         )
                     }

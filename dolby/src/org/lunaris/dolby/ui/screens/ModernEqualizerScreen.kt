@@ -282,8 +282,8 @@ private fun ModernEqualizerContent(
                         Text(
                             text = stringResource(
                                 R.string.band_mode_mismatch_desc,
-                                state.currentPreset.bandMode.displayName,
-                                state.bandMode.displayName
+                                stringResource(state.currentPreset.bandMode.displayNameRes),
+                                stringResource(state.bandMode.displayNameRes)
                             ),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onErrorContainer
@@ -736,7 +736,7 @@ private fun BandModeTile(
             Spacer(modifier = Modifier.height(6.dp))
             
             Text(
-                text = mode.displayName,
+                text = stringResource(mode.displayNameRes),
                 style = MaterialTheme.typography.labelSmall,
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
                 color = if (isSelected)

@@ -189,7 +189,12 @@
     <string name="export_to_file_desc">Xuất ra tệp</string>
     <string name="share_desc">Chia sẻ</string>
 
-    <string name="preset_imported_name">Hồ sơ \'%1$s\' đã được nhập!</string>
+    <string name="preset_import_success_msg">Đã nhập hồ sơ \'%1$s\'! (%2$s)</string>
+    <string name="preset_import_clipboard_success">Đã nhập hồ sơ từ bộ nhớ tạm! (%1$s)</string>
+    <string name="delete_preset_confirm">Bạn có chắc chắn muốn xóa \'%1$s\'? Hành động này không thể hoàn tác.</string>
+    <string name="delete_preset_success">Đã xóa \'%1$s\'</string>
+    <string name="preset_bands_info">%1$s • %2$d băng tần</string>
+
     <string name="batch_export_success">%1$d hồ sơ đã được xuất!</string>
     <string name="batch_import_summary">Đã nhập %1$d trong %2$d hồ sơ</string>
     <string name="copy_success">Đã sao chép hồ sơ vào bộ nhớ tạm!</string>
@@ -220,4 +225,8 @@
     <string name="freq_response_readonly_desc">Chế độ chỉ đọc • Không khớp chế độ băng tần</string>
     <string name="bands_count">%1$d băng tần</string>
     <string name="dolby_geq_slider_label_gain_readonly">Mức tăng (Chỉ đọc)</string>
+
+    <string name="bands_10_title">10 băng tần</string>
+    <string name="bands_15_title">15 băng tần</string>
+    <string name="bands_20_title">20 băng tần</string>
 </resources>

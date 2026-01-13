@@ -189,7 +189,12 @@
     <string name="export_to_file_desc">Export to file</string>
     <string name="share_desc">Share</string>
 
-    <string name="preset_imported_name">Preset \'%1$s\' imported!</string>
+    <string name="preset_import_success_msg">Preset \'%1$s\' imported! (%2$s)</string>
+    <string name="preset_import_clipboard_success">Preset imported from clipboard! (%1$s)</string>
+    <string name="delete_preset_confirm">Are you sure you want to delete \'%1$s\'? This action cannot be undone.</string>
+    <string name="delete_preset_success">Preset \'%1$s\' deleted</string>
+    <string name="preset_bands_info">%1$s • %2$d bands</string>
+
     <string name="batch_export_success">%1$d presets exported!</string>
     <string name="batch_import_summary">Imported %1$d of %2$d presets</string>
     <string name="copy_success">Preset copied to clipboard!</string>
@@ -220,4 +225,8 @@
     <string name="freq_response_readonly_desc">Read-only view • Band mode mismatch</string>
     <string name="bands_count">%1$d bands</string>
     <string name="dolby_geq_slider_label_gain_readonly">Gain (Read-only)</string>
+
+    <string name="bands_10_title">10 Bands</string>
+    <string name="bands_15_title">15 Bands</string>
+    <string name="bands_20_title">20 Bands</string>
 </resources>
