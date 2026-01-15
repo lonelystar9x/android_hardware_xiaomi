@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import org.lunaris.dolby.R
 import org.lunaris.dolby.service.AppProfileMonitorService
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AppProfileSettingsCard(
     onManageClick: () -> Unit,
@@ -45,9 +46,9 @@ fun AppProfileSettingsCard(
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
+        shape = MaterialTheme.shapes.extraLarge,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+            containerColor = MaterialTheme.colorScheme.surfaceBright
         )
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
@@ -57,8 +58,8 @@ fun AppProfileSettingsCard(
             ) {
                 Surface(
                     modifier = Modifier.size(40.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    color = MaterialTheme.colorScheme.primaryContainer
+                    shape = MaterialTheme.shapes.medium,
+                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f)
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
@@ -75,7 +76,8 @@ fun AppProfileSettingsCard(
                 Text(
                     text = stringResource(R.string.app_profiles_title),
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
             
@@ -94,7 +96,8 @@ fun AppProfileSettingsCard(
                 Text(
                     text = stringResource(R.string.app_profiles_auto_switch),
                     style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 
                 Switch(
@@ -114,7 +117,11 @@ fun AppProfileSettingsCard(
                         }
                     },
                     thumbContent = {
-                        Crossfade(targetState = isEnabled, label = "switch_icon") { isChecked ->
+                        Crossfade(
+                            targetState = isEnabled,
+                            animationSpec = MaterialTheme.motionScheme.slowEffectsSpec(),
+                            label = "switch_icon"
+                        ) { isChecked ->
                             if (isChecked) {
                                 Icon(
                                     imageVector = Icons.Filled.Check,
@@ -129,15 +136,7 @@ fun AppProfileSettingsCard(
                                 )
                             }
                         }
-                    },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = MaterialTheme.colorScheme.primary,
-                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                        checkedIconColor = MaterialTheme.colorScheme.onPrimary,
-                        uncheckedThumbColor = MaterialTheme.colorScheme.outline,
-                        uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant,
-                        uncheckedIconColor = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    }
                 )
             }
             
@@ -154,7 +153,8 @@ fun AppProfileSettingsCard(
                             Text(
                                 text = stringResource(R.string.app_profiles_headphone_only),
                                 style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = FontWeight.Medium
+                                fontWeight = FontWeight.Medium,
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                             Text(
                                 text = stringResource(R.string.app_profiles_headphone_only_description),
@@ -173,7 +173,11 @@ fun AppProfileSettingsCard(
                                 prefs.edit().putBoolean("app_profile_headphone_only", enabled).apply()
                             },
                             thumbContent = {
-                                Crossfade(targetState = headphoneOnlyMode, label = "headphone_switch_icon") { isChecked ->
+                                Crossfade(
+                                    targetState = headphoneOnlyMode,
+                                    animationSpec = MaterialTheme.motionScheme.slowEffectsSpec(),
+                                    label = "headphone_switch_icon"
+                                ) { isChecked ->
                                     if (isChecked) {
                                         Icon(
                                             imageVector = Icons.Filled.Check,
@@ -188,15 +192,7 @@ fun AppProfileSettingsCard(
                                         )
                                     }
                                 }
-                            },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                                checkedIconColor = MaterialTheme.colorScheme.onPrimary,
-                                uncheckedThumbColor = MaterialTheme.colorScheme.outline,
-                                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant,
-                                uncheckedIconColor = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                            }
                         )
                     }
                     
@@ -210,7 +206,8 @@ fun AppProfileSettingsCard(
                         Text(
                             text = stringResource(R.string.app_profiles_show_toasts),
                             style = MaterialTheme.typography.bodyLarge,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.Medium,
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         
                         Switch(
@@ -220,7 +217,11 @@ fun AppProfileSettingsCard(
                                 prefs.edit().putBoolean("app_profile_show_toasts", show).apply()
                             },
                             thumbContent = {
-                                Crossfade(targetState = showToasts, label = "toast_switch_icon") { isChecked ->
+                                Crossfade(
+                                    targetState = showToasts,
+                                    animationSpec = MaterialTheme.motionScheme.slowEffectsSpec(),
+                                    label = "toast_switch_icon"
+                                ) { isChecked ->
                                     if (isChecked) {
                                         Icon(
                                             imageVector = Icons.Filled.Check,
@@ -235,15 +236,7 @@ fun AppProfileSettingsCard(
                                         )
                                     }
                                 }
-                            },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                                checkedIconColor = MaterialTheme.colorScheme.onPrimary,
-                                uncheckedThumbColor = MaterialTheme.colorScheme.outline,
-                                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant,
-                                uncheckedIconColor = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                            }
                         )
                     }
                 }
@@ -254,7 +247,11 @@ fun AppProfileSettingsCard(
             Button(
                 onClick = onManageClick,
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp)
+                shape = MaterialTheme.shapes.medium,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                )
             ) {
                 Icon(
                     Icons.Default.Apps,
@@ -282,13 +279,15 @@ fun AppProfileSettingsCard(
                 Text(
                     text = stringResource(R.string.permission_required_title),
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
                 ) 
             },
             text = {
                 Text(
                     text = stringResource(R.string.usage_access_permission_summary),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             },
             confirmButton = {
@@ -298,7 +297,7 @@ fun AppProfileSettingsCard(
                         context.startActivity(intent)
                         showPermissionDialog = false
                     },
-                    shape = RoundedCornerShape(12.dp)
+                    shape = MaterialTheme.shapes.medium
                 ) {
                     Text(stringResource(R.string.grant_permission))
                 }
@@ -306,12 +305,12 @@ fun AppProfileSettingsCard(
             dismissButton = {
                 TextButton(
                     onClick = { showPermissionDialog = false },
-                    shape = RoundedCornerShape(12.dp)
+                    shape = MaterialTheme.shapes.medium
                 ) {
                     Text(stringResource(R.string.cancel))
                 }
             },
-            shape = RoundedCornerShape(28.dp)
+            shape = MaterialTheme.shapes.extraLarge
         )
     }
 }

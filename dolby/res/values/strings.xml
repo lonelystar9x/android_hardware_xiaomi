@@ -218,14 +218,16 @@
 
     <string name="band_mode_mismatch_title">Band Mode Mismatch</string>
     <string name="band_mode_mismatch_desc">This %1$s preset cannot be edited in %2$s mode. Switch to %1$s or select a compatible preset.</string>
-    
+
+    <string name="freq_response">Frequency Response</string>    
     <string name="freq_response_interactive">Interactive Frequency Response</string>
     <string name="freq_response_readonly">Frequency Response (Read-only)</string>
     <string name="freq_response_desc">Drag the control points to adjust gain (±15 dB) • %1$s</string>
     <string name="freq_response_readonly_desc">Read-only view • Band mode mismatch</string>
     <string name="bands_count">%1$d bands</string>
     <string name="dolby_geq_slider_label_gain_readonly">Gain (Read-only)</string>
-
+    <string name="lock_title">Locked</string>
+	
     <string name="bands_10_title">10 Bands</string>
     <string name="bands_15_title">15 Bands</string>
     <string name="bands_20_title">20 Bands</string>

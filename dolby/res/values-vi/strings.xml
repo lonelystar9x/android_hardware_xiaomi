@@ -218,14 +218,14 @@
 
     <string name="band_mode_mismatch_title">Không khớp chế độ băng tần</string>
     <string name="band_mode_mismatch_desc">Hồ sơ %1$s này không thể chỉnh sửa ở chế độ %2$s. Chuyển sang %1$s hoặc chọn hồ sơ tương thích.</string>
-    
-    <string name="freq_response_interactive">Biểu đồ tần số tương tác</string>
+    <string name="freq_response">Biểu đồ tần số</string> 
+    <string name="freq_response_interactive">Biểu đồ tần số</string>
     <string name="freq_response_readonly">Biểu đồ tần số (Chỉ đọc)</string>
     <string name="freq_response_desc">Kéo các điểm điều khiển để điều chỉnh tần số (±15 dB) • %1$s</string>
     <string name="freq_response_readonly_desc">Chế độ chỉ đọc • Không khớp chế độ băng tần</string>
     <string name="bands_count">%1$d băng tần</string>
     <string name="dolby_geq_slider_label_gain_readonly">Mức tăng (Chỉ đọc)</string>
-
+    <string name="lock_title">Đã khóa</string>
     <string name="bands_10_title">10 băng tần</string>
     <string name="bands_15_title">15 băng tần</string>
     <string name="bands_20_title">20 băng tần</string>

@@ -11,7 +11,6 @@ import android.content.Intent
 import android.provider.Settings
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -25,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import org.lunaris.dolby.R
 import org.lunaris.dolby.service.DolbyNotificationListener
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun NotificationListenerPermissionCard(
     modifier: Modifier = Modifier
@@ -44,7 +44,7 @@ fun NotificationListenerPermissionCard(
     ) {
         Card(
             modifier = modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(24.dp),
+            shape = MaterialTheme.shapes.extraLarge,
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.errorContainer
             )
@@ -56,7 +56,7 @@ fun NotificationListenerPermissionCard(
                 ) {
                     Surface(
                         modifier = Modifier.size(40.dp),
-                        shape = RoundedCornerShape(12.dp),
+                        shape = MaterialTheme.shapes.medium,
                         color = MaterialTheme.colorScheme.error
                     ) {
                         Box(contentAlignment = Alignment.Center) {
@@ -85,9 +85,10 @@ fun NotificationListenerPermissionCard(
                 Button(
                     onClick = { showPermissionDialog = true },
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
+                    shape = MaterialTheme.shapes.medium,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.error
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = MaterialTheme.colorScheme.onError
                     )
                 ) {
                     Icon(
@@ -117,13 +118,15 @@ fun NotificationListenerPermissionCard(
                 Text(
                     text = stringResource(R.string.notification_dialog_title),
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
                 ) 
             },
             text = {
                 Text(
                     text = stringResource(R.string.notification_dialog_msg),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             },
             confirmButton = {
@@ -132,7 +135,7 @@ fun NotificationListenerPermissionCard(
                         openNotificationListenerSettings(context)
                         showPermissionDialog = false
                     },
-                    shape = RoundedCornerShape(12.dp)
+                    shape = MaterialTheme.shapes.medium
                 ) {
                     Text(stringResource(R.string.open_settings))
                 }
@@ -140,12 +143,12 @@ fun NotificationListenerPermissionCard(
             dismissButton = {
                 TextButton(
                     onClick = { showPermissionDialog = false },
-                    shape = RoundedCornerShape(12.dp)
+                    shape = MaterialTheme.shapes.medium
                 ) {
                     Text(stringResource(R.string.cancel))
                 }
             },
-            shape = RoundedCornerShape(28.dp)
+            shape = MaterialTheme.shapes.extraLarge
         )
     }
 }
