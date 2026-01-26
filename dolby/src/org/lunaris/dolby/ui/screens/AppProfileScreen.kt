@@ -255,8 +255,8 @@ fun AppProfileScreen(
 
     if (showClearAllDialog) {
         ModernConfirmDialog(
-            title = "Clear All App Profiles",
-            message = "This will remove all per-app profile assignments. Apps will use the default profile.",
+            title = stringResource(R.string.app_profiles_clear_all),
+            message = stringResource(R.string.app_profiles_clear_all_message),
             icon = Icons.Default.ClearAll,
             onConfirm = {
                 viewModel.clearAllAppProfiles()
@@ -316,9 +316,9 @@ private fun AppProfileItem(
                 
                 val currentProfileName = if (app.assignedProfile >= 0) {
                     val index = profileValues.indexOfFirst { it.toInt() == app.assignedProfile }
-                    if (index >= 0) profiles[index] else "Default"
+                    if (index >= 0) profiles[index] else stringResource(R.string.app_profiles_default)
                 } else {
-                    "Default"
+                    stringResource(R.string.app_profiles_default)
                 }
                 
                 Text(

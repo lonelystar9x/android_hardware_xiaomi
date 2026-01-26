@@ -48,6 +48,15 @@
     <string name="dolby_notification_listener_label">Dolby Atmos Service</string>
     <string name="loading">Loading...</string>
 
+    <string name="dolby_category_virtualizer">Surround Virtualizer</string>
+    <string name="dolby_category_dialogue">Dialogue Enhancement</string>
+    <string name="error_invalid_bass_level">Invalid bass level: %1$s</string>
+    <string name="error_invalid_mid_level">Invalid mid level: %1$s</string>
+    <string name="error_invalid_treble_level">Invalid treble level: %1$s</string>
+    <string name="error_set_bass_failed">Failed to set bass level</string>
+    <string name="error_set_mid_failed">Failed to set mid level</string>
+    <string name="error_set_treble_failed">Failed to set treble level</string>
+
     <!-- Dolby profiles -->
     <string name="dolby_profile_dynamic">Dynamic</string>
     <string name="dolby_profile_video">Movie/Video</string>
@@ -83,7 +92,10 @@
     <string name="equalizer">Equalizer</string>
     <string name="advanced">Advanced</string>
     <string name="home">Home</string>
-
+    <string name="equalizer_view_title">Equalizer View</string>
+    <string name="equalizer_view_curve">Curve</string>
+    <string name="equalizer_view_sliders">Sliders</string>
+	
     <!-- Dolby equalizer UI -->
     <string name="dolby_geq_slider_label_gain">Gain</string>
     <string name="dolby_geq_preset">Preset</string>
@@ -101,6 +113,14 @@
     <string name="locked">Locked</string>
     <string name="band_configuration">Band Configuration</string>
     <string name="choose_equalizer_precision">Choose equalizer precision: more bands = finer control</string>
+
+    <string name="band_mode_mismatch_desc">This %1$s preset cannot be edited in %2$s mode. Switch to %1$s or select a compatible preset.</string>
+    <string name="freq_response_interactive">Interactive Frequency Response</string>
+    <string name="freq_response_readonly">Frequency Response (Read-only)</string>
+    <string name="freq_response_desc">Drag the control points to adjust gain (±15 dB) • %1$s</string>
+    <string name="freq_response_readonly_desc">Read-only view • Band mode mismatch</string>
+    <string name="bands_count">%1$d bands</string>
+    <string name="dolby_geq_slider_label_gain_readonly">Gain (Read-only)</string>
 
     <!-- Dolby intelligent EQ -->
     <string name="dolby_ieq">Intelligent equalizer</string>
@@ -131,6 +151,14 @@
     <string name="app_profiles_auto_switch">Auto-switch profiles</string>
     <string name="app_profiles_show_toasts">Show toasts</string>
 
+    <string name="error_unknown">Unknown error</string>
+    <string name="error_invalid_state">Invalid state</string>
+    <string name="error_band_mode_mismatch_toast">Cannot edit %1$s preset in %2$s mode. Switch to %1$s or select a different preset.</string>
+    <string name="msg_profile_reset_default">Profile reset to default</string>
+    <string name="msg_profile_set">Profile set to: %1$s</string>
+    <string name="msg_profile_removed">Profile removed</string>
+    <string name="msg_all_profiles_cleared">All app profiles cleared</string>
+
     <!-- Preset Import/Export -->
     <string name="preset_import_export">Import/Export Presets</string>
     <string name="preset_export_single">Export Preset</string>
@@ -144,6 +172,29 @@
     <string name="preset_import_success">Preset imported successfully</string>
     <string name="preset_export_failed">Export failed</string>
     <string name="preset_import_failed">Import failed</string>
+
+    <string name="preset_import_success_msg">Preset \'%1$s\' imported! (%2$s)</string>
+    <string name="preset_import_clipboard_success">Preset imported from clipboard! (%1$s)</string>
+    <string name="delete_preset_confirm">Are you sure you want to delete \'%1$s\'? This action cannot be undone.</string>
+    <string name="delete_preset_success">Preset \'%1$s\' deleted</string>
+    <string name="preset_bands_info">%1$s • %2$d bands</string>
+
+    <string name="batch_export_success">%1$d presets exported!</string>
+    <string name="batch_import_summary">Imported %1$d of %2$d presets</string>
+    <string name="copy_success">Preset copied to clipboard!</string>
+    <string name="share_failed">Share failed</string>
+    <string name="clipboard_import_failed">Clipboard import failed</string>
+
+    <string name="error_invalid_version">Preset version not supported</string>
+    <string name="error_band_mismatch">Band count mismatch: expected %1$d, got %2$d</string>
+    <string name="error_open_file">Cannot open file</string>
+    <string name="preset_share_subject">Dolby Preset: %1$s (%2$s)</string>
+    <string name="preset_share_text">Check out this custom Dolby %1$s audio preset!</string>
+    <string name="preset_clipboard_label">Dolby Preset: %1$s (%2$s)</string>
+    <string name="error_empty_clipboard">No data in clipboard</string>
+    <string name="bands_10_title">10 Bands</string>
+    <string name="bands_15_title">15 Bands</string>
+    <string name="bands_20_title">20 Bands</string>
 
     <!-- Notification Access -->
     <string name="notification_access_required">Notification Access Required</string>
