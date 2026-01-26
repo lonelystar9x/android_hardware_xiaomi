@@ -49,13 +49,7 @@ fun PresetImportExportScreen(
     var showDeleteDialog by remember { mutableStateOf(false) }
     var presetToDelete by remember { mutableStateOf<EqualizerPreset?>(null) }
     var isLoading by remember { mutableStateOf(false) }
-
-    val exportSuccessMsg = stringResource(R.string.preset_export_success)
-    val exportFailedMsg = stringResource(R.string.preset_export_failed)
-    val importFailedMsg = stringResource(R.string.preset_import_failed)
-    val copySuccessMsg = stringResource(R.string.copy_success)
-    val shareFailedMsg = stringResource(R.string.share_failed)
-
+    
     val exportLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument("application/json")
     ) { uri ->
@@ -65,10 +59,10 @@ fun PresetImportExportScreen(
                     isLoading = true
                     exportManager.exportPresetToFile(preset, uri).fold(
                         onSuccess = {
-                            ToastHelper.showToast(context, exportSuccessMsg)
+                            ToastHelper.showToast(context, "Preset exported successfully!")
                         },
                         onFailure = { e ->
-                            ToastHelper.showToast(context, "$exportFailedMsg: ${e.message}")
+                            ToastHelper.showToast(context, "Export failed: ${e.message}")
                         }
                     )
                     isLoading = false
@@ -90,16 +84,15 @@ fun PresetImportExportScreen(
                         if (error != null) {
                             ToastHelper.showToast(context, error)
                         } else {
-                            val modeName = context.getString(preset.bandMode.displayNameRes)
                             ToastHelper.showToast(
                                 context, 
-                                context.getString(R.string.preset_import_success_msg, preset.name, modeName)
+                                "Preset '${preset.name}' imported! (${preset.bandMode.displayName})"
                             )
                             viewModel.loadEqualizer()
                         }
                     },
                     onFailure = { e ->
-                        ToastHelper.showToast(context, "$importFailedMsg: ${e.message}")
+                        ToastHelper.showToast(context, "Import failed: ${e.message}")
                     }
                 )
                 isLoading = false
@@ -118,10 +111,10 @@ fun PresetImportExportScreen(
                 
                 exportManager.exportMultiplePresets(presets, uri).fold(
                     onSuccess = {
-                        ToastHelper.showToast(context, context.getString(R.string.batch_export_success, presets.size))
+                        ToastHelper.showToast(context, "${presets.size} presets exported!")
                     },
                     onFailure = { e ->
-                        ToastHelper.showToast(context, "$exportFailedMsg: ${e.message}")
+                        ToastHelper.showToast(context, "Batch export failed: ${e.message}")
                     }
                 )
                 isLoading = false
@@ -146,12 +139,12 @@ fun PresetImportExportScreen(
                         }
                         ToastHelper.showToast(
                             context, 
-                            context.getString(R.string.batch_import_summary, successCount, presets.size)
+                            "Imported $successCount of ${presets.size} presets"
                         )
                         viewModel.loadEqualizer()
                     },
                     onFailure = { e ->
-                        ToastHelper.showToast(context, "$importFailedMsg: ${e.message}")
+                        ToastHelper.showToast(context, "Batch import failed: ${e.message}")
                     }
                 )
                 isLoading = false
@@ -164,7 +157,7 @@ fun PresetImportExportScreen(
             TopAppBar(
                 title = { 
                     Text(
-                        stringResource(R.string.preset_import_export),
+                        stringResource(R.string.import_export_presets),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
@@ -174,7 +167,7 @@ fun PresetImportExportScreen(
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack, 
-                            contentDescription = stringResource(R.string.back),
+                            contentDescription = "Back",
                             tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
@@ -183,7 +176,7 @@ fun PresetImportExportScreen(
                     IconButton(onClick = { showBatchExport = true }) {
                         Icon(
                             Icons.Default.FileDownload, 
-                            contentDescription = stringResource(R.string.batch_export_desc),
+                            contentDescription = "Batch export",
                             tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
@@ -231,14 +224,14 @@ fun PresetImportExportScreen(
                                         }
                                         Spacer(modifier = Modifier.width(12.dp))
                                         Text(
-                                            stringResource(R.string.preset_import_single),
+                                            stringResource(R.string.import_presets),
                                             style = MaterialTheme.typography.titleLarge,
                                             fontWeight = FontWeight.Bold,
                                             color = MaterialTheme.colorScheme.onSurface
                                         )
                                     }
                                     Text(
-                                        stringResource(R.string.import_description),
+                                        stringResource(R.string.import_presets_description),
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         modifier = Modifier.padding(bottom = 16.dp)
@@ -258,7 +251,7 @@ fun PresetImportExportScreen(
                                         ) {
                                             Icon(Icons.Default.FolderOpen, contentDescription = null)
                                             Spacer(Modifier.width(8.dp))
-                                            Text(stringResource(R.string.single_file_btn))
+                                            Text(stringResource(R.string.import_single_file))
                                         }
                                         Button(
                                             onClick = { batchImportLauncher.launch("*/*") },
@@ -271,7 +264,7 @@ fun PresetImportExportScreen(
                                         ) {
                                             Icon(Icons.Default.FolderCopy, contentDescription = null)
                                             Spacer(Modifier.width(8.dp))
-                                            Text(stringResource(R.string.batch_btn))
+                                            Text(stringResource(R.string.import_batch))
                                         }
                                     }
                                     Spacer(Modifier.height(8.dp))
@@ -285,10 +278,9 @@ fun PresetImportExportScreen(
                                                         if (error != null) {
                                                             ToastHelper.showToast(context, error)
                                                         } else {
-                                                            val modeName = context.getString(preset.bandMode.displayNameRes)
                                                             ToastHelper.showToast(
-                                                                context,
-                                                                context.getString(R.string.preset_import_clipboard_success, modeName)
+                                                                context, 
+                                                                "Preset imported from clipboard! (${preset.bandMode.displayName})"
                                                             )
                                                             viewModel.loadEqualizer()
                                                         }
@@ -296,7 +288,7 @@ fun PresetImportExportScreen(
                                                     onFailure = { e ->
                                                         ToastHelper.showToast(
                                                             context, 
-                                                            "${context.getString(R.string.clipboard_import_failed)}: ${e.message}"
+                                                            "Clipboard import failed: ${e.message}"
                                                         )
                                                     }
                                                 )
@@ -311,14 +303,14 @@ fun PresetImportExportScreen(
                                     ) {
                                         Icon(Icons.Default.ContentPaste, contentDescription = null)
                                         Spacer(Modifier.width(8.dp))
-                                        Text(stringResource(R.string.from_clipboard_btn))
+                                        Text(stringResource(R.string.import_from_clipboard))
                                     }
                                 }
                             }
                         }
                         item {
                             Text(
-                                stringResource(R.string.custom_presets_header),
+                                stringResource(R.string.your_custom_presets),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onSurface,
@@ -337,12 +329,15 @@ fun PresetImportExportScreen(
                                         isLoading = true
                                         exportManager.copyPresetToClipboard(preset).fold(
                                             onSuccess = {
-                                                ToastHelper.showToast(context, copySuccessMsg)
+                                                ToastHelper.showToast(
+                                                    context, 
+                                                    "Preset copied to clipboard!"
+                                                )
                                             },
                                             onFailure = { e ->
                                                 ToastHelper.showToast(
                                                     context, 
-                                                    "$exportFailedMsg: ${e.message}"
+                                                    "Copy failed: ${e.message}"
                                                 )
                                             }
                                         )
@@ -359,7 +354,7 @@ fun PresetImportExportScreen(
                                             onFailure = { e ->
                                                 ToastHelper.showToast(
                                                     context, 
-                                                    "$shareFailedMsg: ${e.message}"
+                                                    "Share failed: ${e.message}"
                                                 )
                                             }
                                         )
@@ -405,7 +400,7 @@ fun PresetImportExportScreen(
                             CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                             Spacer(Modifier.height(16.dp))
                             Text(
-                                stringResource(R.string.processing_label),
+                                stringResource(R.string.processing),
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                         }
@@ -431,13 +426,13 @@ fun PresetImportExportScreen(
             },
             title = { 
                 Text(
-                    stringResource(R.string.batch_export_desc),
+                    stringResource(R.string.batch_export),
                     color = MaterialTheme.colorScheme.onSurface
                 ) 
             },
             text = { 
                 Text(
-                    context.getString(R.string.batch_export_dialog_msg, presetCount),
+                    stringResource(R.string.batch_export_description, presetCount),
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 ) 
             },
@@ -448,7 +443,7 @@ fun PresetImportExportScreen(
                     },
                     shape = MaterialTheme.shapes.medium
                 ) {
-                    Text(stringResource(R.string.export_all_btn))
+                    Text(stringResource(R.string.export_all))
                 }
             },
             dismissButton = {
@@ -462,17 +457,16 @@ fun PresetImportExportScreen(
             shape = MaterialTheme.shapes.extraLarge
         )
     }
-
+    
     if (showDeleteDialog && presetToDelete != null) {
         ModernConfirmDialog(
-            title = stringResource(R.string.dolby_geq_delete_preset),
-            message = stringResource(R.string.delete_preset_confirm, presetToDelete?.name ?: ""),
+            title = "Delete Preset",
+            message = "Are you sure you want to delete '${presetToDelete!!.name}'? This will remove it from your preset list and cannot be undone.",
             icon = Icons.Default.Delete,
             onConfirm = {
                 scope.launch {
-                    val name = presetToDelete?.name ?: ""
                     viewModel.deletePreset(presetToDelete!!)
-                    ToastHelper.showToast(context, context.getString(R.string.delete_preset_success, name))
+                    ToastHelper.showToast(context, "Preset '${presetToDelete!!.name}' deleted")
                     viewModel.loadEqualizer()
                     showDeleteDialog = false
                     presetToDelete = null
@@ -515,11 +509,7 @@ private fun PresetExportCard(
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
-                        text = stringResource(
-                        R.string.preset_bands_info, 
-                        stringResource(preset.bandMode.displayNameRes),
-                        preset.bandGains.size
-                        ),
+                        "${preset.bandMode.displayName} • ${preset.bandGains.size} bands",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -528,28 +518,28 @@ private fun PresetExportCard(
                     IconButton(onClick = onExportFile) {
                         Icon(
                             Icons.Default.FileDownload, 
-                            contentDescription = stringResource(R.string.export_to_file_desc),
+                            contentDescription = "Export to file",
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
                     IconButton(onClick = onCopyClipboard) {
                         Icon(
                             Icons.Default.ContentCopy, 
-                            contentDescription = stringResource(R.string.preset_copy_clipboard),
+                            contentDescription = "Copy to clipboard",
                             tint = MaterialTheme.colorScheme.secondary
                         )
                     }
                     IconButton(onClick = onShare) {
                         Icon(
                             Icons.Default.Share, 
-                            contentDescription = stringResource(R.string.share_desc),
+                            contentDescription = "Share",
                             tint = MaterialTheme.colorScheme.tertiary
                         )
                     }
                     IconButton(onClick = onDelete) {
                         Icon(
                             Icons.Default.Delete, 
-                            contentDescription = stringResource(R.string.action_delete),
+                            contentDescription = "Delete",
                             tint = MaterialTheme.colorScheme.error
                         )
                     }

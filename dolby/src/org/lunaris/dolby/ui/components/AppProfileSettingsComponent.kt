@@ -82,7 +82,7 @@ fun AppProfileSettingsCard(
             }
             
             Text(
-                text = stringResource(R.string.app_profiles_summary),
+                text = stringResource(R.string.app_profiles_desc),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -151,13 +151,13 @@ fun AppProfileSettingsCard(
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                text = stringResource(R.string.app_profiles_headphone_only),
+                                text = context.getString(R.string.app_profiles_headphone_only),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Medium,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                             Text(
-                                text = stringResource(R.string.app_profiles_headphone_only_description),
+                                text = context.getString(R.string.app_profiles_headphone_only_description),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.padding(top = 2.dp)
@@ -277,7 +277,7 @@ fun AppProfileSettingsCard(
             },
             title = { 
                 Text(
-                    text = stringResource(R.string.permission_required_title),
+                    stringResource(R.string.app_profiles_permission_required),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
@@ -285,7 +285,7 @@ fun AppProfileSettingsCard(
             },
             text = {
                 Text(
-                    text = stringResource(R.string.usage_access_permission_summary),
+                    stringResource(R.string.app_profiles_permission_required_details),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -299,7 +299,7 @@ fun AppProfileSettingsCard(
                     },
                     shape = MaterialTheme.shapes.medium
                 ) {
-                    Text(stringResource(R.string.grant_permission))
+                    Text(stringResource(R.string.app_profiles_grant_permission))
                 }
             },
             dismissButton = {

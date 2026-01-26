@@ -173,6 +173,37 @@ private fun ModernAdvancedSettingsContent(
                     Spacer(modifier = Modifier.height(12.dp))
                     Column {
                         ModernSettingSwitch(
+                            title = stringResource(R.string.dolby_mid_enhancer),
+                            subtitle = stringResource(R.string.dolby_mid_enhancer_summary),
+                            checked = state.profileSettings.midLevel > 0,
+                            onCheckedChange = { enabled ->
+                                if (enabled && state.profileSettings.midLevel == 0) {
+                                    viewModel.setMidLevel(40)
+                                } else if (!enabled) {
+                                    viewModel.setMidLevel(0)
+                                }
+                            },
+                            icon = Icons.Default.VolumeUp
+                        )
+
+                        AnimatedVisibility(visible = state.profileSettings.midLevel > 0) {
+                            Column {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                ModernSettingSlider(
+                                    title = stringResource(R.string.dolby_mid_level),
+                                    value = state.profileSettings.midLevel,
+                                    onValueChange = { viewModel.setMidLevel(it.toInt()) },
+                                    valueRange = 0f..100f,
+                                    steps = 19,
+                                    valueLabel = { "$it%" }
+                                )
+                            }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Column {
+                        ModernSettingSwitch(
                             title = stringResource(R.string.dolby_treble_enhancer),
                             subtitle = stringResource(R.string.dolby_treble_enhancer_summary),
                             checked = state.profileSettings.trebleLevel > 0,
@@ -200,8 +231,14 @@ private fun ModernAdvancedSettingsContent(
                             }
                         }
                     }
-                    
-                    Spacer(modifier = Modifier.height(8.dp))
+                }
+            }
+            
+            item {
+                ModernSettingsCard(
+                    title = "Volume Leveler",
+                    icon = Icons.Default.VolumeDown
+                ) {
                     ModernSettingSwitch(
                         title = stringResource(R.string.dolby_volume_leveler),
                         subtitle = stringResource(R.string.dolby_volume_leveler_summary),
@@ -215,7 +252,7 @@ private fun ModernAdvancedSettingsContent(
             if (state.settings.currentProfile != 0) {
                 item {
                     ModernSettingsCard(
-                        title = stringResource(R.string.dolby_category_virtualizer),
+                        title = "Surround Virtualizer",
                         icon = Icons.Default.Headphones
                     ) {
                         if (state.isOnSpeaker) {
@@ -253,7 +290,7 @@ private fun ModernAdvancedSettingsContent(
                 
                 item {
                     ModernSettingsCard(
-                        title = stringResource(R.string.dolby_category_dialogue),
+                        title = "Dialogue Enhancement",
                         icon = Icons.Default.RecordVoiceOver
                     ) {
                         ModernSettingSwitch(
@@ -324,7 +361,7 @@ private fun ModernAdvancedSettingsContent(
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text = stringResource(R.string.dolby_adv_settings_disabled_hint),
+                            text = stringResource(R.string.dolby_adv_settings_footer),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSecondaryContainer
                         )

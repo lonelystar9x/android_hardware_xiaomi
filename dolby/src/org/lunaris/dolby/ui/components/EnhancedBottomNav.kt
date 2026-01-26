@@ -56,7 +56,7 @@ fun EnhancedBottomNavigationBar(
             
             EnhancedNavItem(
                 icon = Icons.Default.Home,
-                label = stringResource(R.string.nav_home),
+                label = stringResource(R.string.home),
                 selected = isHomeSelected,
                 onClick = { onNavigate("settings") },
                 isMiddleItem = false,
@@ -66,7 +66,7 @@ fun EnhancedBottomNavigationBar(
             
             EnhancedNavItem(
                 icon = Icons.Default.GraphicEq,
-                label = stringResource(R.string.nav_equalizer),
+                label = stringResource(R.string.equalizer),
                 selected = isEqualizerSelected,
                 onClick = { onNavigate("equalizer") },
                 isEqualizer = true,
@@ -77,7 +77,7 @@ fun EnhancedBottomNavigationBar(
             
             EnhancedNavItem(
                 icon = Icons.Default.Settings,
-                label = stringResource(R.string.nav_advanced),
+                label = stringResource(R.string.advanced),
                 selected = isAdvancedSelected,
                 onClick = { onNavigate("advanced") },
                 isMiddleItem = false,

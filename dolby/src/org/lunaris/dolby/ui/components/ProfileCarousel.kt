@@ -275,7 +275,7 @@ private fun ProfileCard(
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
                             imageVector = Icons.Default.Check,
-                            contentDescription = stringResource(R.string.cd_selected),
+                            contentDescription = "Selected",
                             tint = gradient[0],
                             modifier = Modifier.size(16.dp)
                         )

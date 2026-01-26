@@ -238,9 +238,9 @@ class AppProfileMonitorService : Service() {
         
         return try {
             val index = profileValues.indexOfFirst { it.toInt() == profile }
-            if (index >= 0) profiles[index] else getString(R.string.dolby_unknown)
+            if (index >= 0) profiles[index] else "Unknown"
         } catch (e: Exception) {
-            getString(R.string.dolby_unknown)
+            "Unknown"
         }
     }
     

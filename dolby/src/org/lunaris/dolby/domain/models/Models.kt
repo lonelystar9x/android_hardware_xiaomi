@@ -5,12 +5,10 @@
 
 package org.lunaris.dolby.domain.models
 
-import org.lunaris.dolby.R
-
-enum class BandMode(val value: String, val displayNameRes: Int, val bandCount: Int) {
-    TEN_BAND("10", R.string.bands_10_title, 10),
-    FIFTEEN_BAND("15", R.string.bands_15_title, 15),
-    TWENTY_BAND("20", R.string.bands_20_title, 20);
+enum class BandMode(val value: String, val displayName: String, val bandCount: Int) {
+    TEN_BAND("10", "10 Bands", 10),
+    FIFTEEN_BAND("15", "15 Bands", 15),
+    TWENTY_BAND("20", "20 Bands", 20);
     
     companion object {
         fun fromValue(value: String): BandMode {
@@ -41,6 +39,7 @@ data class ProfileSettings(
     val dialogueEnhancerEnabled: Boolean = false,
     val dialogueEnhancerAmount: Int = 6,
     val bassLevel: Int = 0,
+    val midLevel: Int = 0,
     val trebleLevel: Int = 0,
     val bassCurve: Int = 0
 )

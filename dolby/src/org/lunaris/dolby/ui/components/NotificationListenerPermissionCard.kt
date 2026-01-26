@@ -70,14 +70,14 @@ fun NotificationListenerPermissionCard(
                     }
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
-                        text = stringResource(R.string.notification_permission_title),
+                        text = stringResource(R.string.notification_access_required),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onErrorContainer
                     )
                 }
                 Text(
-                    text = stringResource(R.string.notification_permission_summary),
+                    text = stringResource(R.string.notification_access_required_desc),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onErrorContainer,
                     modifier = Modifier.padding(bottom = 16.dp)
@@ -97,7 +97,7 @@ fun NotificationListenerPermissionCard(
                         modifier = Modifier.size(20.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(stringResource(R.string.notification_dialog_title))
+                    Text(stringResource(R.string.enable_notification_access))
                 }
             }
         }
@@ -116,7 +116,7 @@ fun NotificationListenerPermissionCard(
             },
             title = { 
                 Text(
-                    text = stringResource(R.string.notification_dialog_title),
+                    stringResource(R.string.enable_notification_access),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
@@ -124,7 +124,7 @@ fun NotificationListenerPermissionCard(
             },
             text = {
                 Text(
-                    text = stringResource(R.string.notification_dialog_msg),
+                    stringResource(R.string.notification_access_permission_details),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

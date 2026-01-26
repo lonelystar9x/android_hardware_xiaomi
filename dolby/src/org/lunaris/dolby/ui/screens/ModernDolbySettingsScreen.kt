@@ -31,6 +31,7 @@ fun ModernDolbySettingsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showResetDialog by remember { mutableStateOf(false) }
+    var showCreditsDialog by remember { mutableStateOf(false) }
     val currentRoute by navController.currentBackStackEntryFlow.collectAsState(null)
 
     Scaffold(
@@ -45,10 +46,17 @@ fun ModernDolbySettingsScreen(
                     ) 
                 },
                 actions = {
+                    IconButton(onClick = { showCreditsDialog = true }) {
+                        Icon(
+                            Icons.Default.Info, 
+                            contentDescription = "Credits",
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
                     IconButton(onClick = { showResetDialog = true }) {
                         Icon(
                             Icons.Default.RestartAlt, 
-                            contentDescription = stringResource(R.string.reset),
+                            contentDescription = "Reset",
                             tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
@@ -144,6 +152,12 @@ fun ModernDolbySettingsScreen(
             onDismiss = { showResetDialog = false }
         )
     }
+    
+    if (showCreditsDialog) {
+        CreditsDialog(
+            onDismiss = { showCreditsDialog = false }
+        )
+    }
 }
 
 @Composable
@@ -188,7 +202,7 @@ private fun ModernDolbySettingsContent(
                 exit = fadeOut() + shrinkVertically()
             ) {
                 ModernSettingsCard(
-                    title = stringResource(R.string.dolby_ieq),
+                    title = "Intelligent Equalizer",
                     icon = Icons.Default.GraphicEq
                 ) {
                     ModernIeqSelector(
